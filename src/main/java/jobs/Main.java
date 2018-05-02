@@ -46,6 +46,8 @@ public class Main {
             }else {
                 logger.info("User has got all the permissions on : " + path);
             }
+        } else {
+            logger.error("Insufficient arguments supplied. Please provide path of the folder whose permission we need to check.");
         }
     }
 }
