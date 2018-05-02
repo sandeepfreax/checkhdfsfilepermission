@@ -42,7 +42,7 @@ public class Main {
 
             if (permissionsNotAvailable.size() > 0){
                 String errorMsg = String.join(" and ", permissionsNotAvailable);
-                logger.error("User does not have " + errorMsg + " permission on " + path);
+                throw new SecurityException("User does not have " + errorMsg + " permission on " + path);
             }else {
                 logger.info("User has got all the permissions on : " + path);
             }
