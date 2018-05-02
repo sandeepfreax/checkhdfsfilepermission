@@ -1,11 +1,10 @@
 package jobs;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.log4j.Logger;
-import util.ConfigurationManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Main {
             List<String> permissionsNotAvailable = new ArrayList<String>();
             logger.info("Checking permission for : " + path);
 
-            FileSystem fileSystem = FileSystem.get(ConfigurationManager.getInstance());
+            FileSystem fileSystem = FileSystem.get(new Configuration());
             FsPermission fsPermission = fileSystem.getFileStatus(pathFs).getPermission();
             logger.info("File permissions : " + fsPermission.toString());
 
@@ -40,7 +39,7 @@ public class Main {
                 }
             }
 
-            if (permissionsNotAvailable.size() > 0){
+            if (!permissionsNotAvailable.isEmpty()){
                 String errorMsg = String.join(" and ", permissionsNotAvailable);
                 throw new SecurityException("User does not have " + errorMsg + " permission on " + path);
             }else {
